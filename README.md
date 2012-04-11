@@ -14,4 +14,4 @@ Out of the box it uses NO storage adapter at all.
   - [DoctrineORMModule](https://github.com/doctrine/DoctrineORMModule)
 
 ## Installation
-See the [INSTALL.md](http://www.github.com/prolic/HumusBase/tree/master/docs/INSTALL.md) file.
+See the [INSTALL.md](http://www.github.com/prolic/HumusUser/tree/master/docs/INSTALL.md) file.
