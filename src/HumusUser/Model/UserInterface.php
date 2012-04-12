@@ -2,6 +2,8 @@
 
 namespace HumusUser\Model;
 
+use DateTime;
+
 interface UserInterface
 {
     /**
@@ -73,17 +75,17 @@ interface UserInterface
     /**
      * Get last login
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getLastLogin();
 
     /**
      * Set last login
      *
-     * @param \DateTime|string $lastLogin
+     * @param DateTime $lastLogin
      * @return UserInterface
      */
-    public function setLastLogin($lastLogin);
+    public function setLastLogin(DateTime $lastLogin);
 
     /**
      * Get last ip
@@ -104,17 +106,17 @@ interface UserInterface
     /**
      * Get register time
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getRegisterTime();
 
     /**
      * Set register time
      *
-     * @param \DateTime|string $registerTime
+     * @param DateTime $registerTime
      * @return UserInterface
      */
-    public function setRegisterTime($registerTime);
+    public function setRegisterTime(DateTime $registerTime);
 
     /**
      * Get register ip

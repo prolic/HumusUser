@@ -2,8 +2,8 @@
 
 namespace HumusUser\Model;
 
-use DateTime,
-    HumusBase\Model\AbstractModel;
+use HumusBase\Model\AbstractModel,
+    DateTime;
 
 class User extends AbstractModel implements UserInterface
 {
@@ -180,16 +180,12 @@ class User extends AbstractModel implements UserInterface
     /**
      * Set last login
      *
-     * @param DateTime|string $lastLogin
+     * @param DateTime $lastLogin
      * @return User
      */
-    public function setLastLogin($lastLogin)
+    public function setLastLogin(DateTime $lastLogin)
     {
-        if ($lastLogin instanceof DateTime) {
-            $this->lastLogin = $lastLogin;
-        } else {
-            $this->lastLogin = new DateTime($lastLogin);
-        }
+        $this->lastLogin = $lastLogin;
         return $this;
     }
 
@@ -232,16 +228,12 @@ class User extends AbstractModel implements UserInterface
     /**
      * Set register time
      *
-     * @param \DateTime|string $registerTime
+     * @param DateTime $registerTime
      * @return User
      */
-    public function setRegisterTime($registerTime)
+    public function setRegisterTime(DateTime $registerTime)
     {
-        if ($registerTime instanceof DateTime) {
-            $this->registerTime = $registerTime;
-        } else {
-            $this->registerTime = new DateTime($registerTime);
-        }
+        $this->registerTime = $registerTime;
         return $this;
     }
 
