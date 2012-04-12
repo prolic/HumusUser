@@ -18,15 +18,8 @@ return array(
             'alias' => array(
                 'humususer'                          => 'HumusUser\Controller\UserController',
                 'humususer_user_service'             => 'HumusUser\Service\User',
-                'humususer_auth_service'             => 'Zend\Authentication\AuthenticationService',
-                'humususer_uemail_validator'         => 'HumusUser\Validator\NoRecordExists',
-                'humususer_uusername_validator'      => 'HumusUser\Validator\NoRecordExists',
                 'humususer_captcha_element'          => 'Zend\Form\Element\Captcha',
-
-                // Default Zend\Db
-                'humususer_zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
-                'humususer_user_mapper'     => 'HumusUser\Model\UserMapper',
-                'humususer_user_tg'         => 'Zend\Db\TableGateway\TableGateway',
+                'humususer_form_register'            => 'HumusUser\Form\Register',
             ),
             'humususer_captcha_element' => array(
                 'parameters' => array(
@@ -45,9 +38,7 @@ return array(
             ),
             'humususer' => array(
                 'parameters' => array(
-                    'loginForm'    => 'HumusUser\Form\Login',
-                    'registerForm' => 'HumusUser\Form\Register',
-                    'userService'  => 'HumusUser\Service\User',
+                    'userService'  => 'humususer_user_service',
                 ),
             ),
             'Zend\View\Resolver\TemplatePathStack' => array(
@@ -57,103 +48,16 @@ return array(
                     ),
                 ),
             ),
-            'Zend\Mvc\Controller\PluginLoader' => array(
+            'humususer_user_service' => array(
                 'parameters' => array(
-                    'map' => array(
-                        'humusUserAuthentication' => 'HumusUser\Controller\Plugin\HumusUserAuthentication',
-                    ),
+                    'registrationForm' => 'humususer_form_register',
                 ),
             ),
-            'HumusUser\Controller\Plugin\HumusUserAuthentication' => array(
+            'humususer_form_register' => array(
                 'parameters' => array(
-                    'authAdapter' => 'HumusUser\Authentication\Adapter\AdapterChain',
-                    'authService' => 'humususer_auth_service',
-                ),
-            ),
-            'HumusUser\Authentication\Adapter\AdapterChain' => array(
-                'parameters' => array(
-                    'defaultAdapter' => 'HumusUser\Authentication\Adapter\Db',
-                ),
-            ),
-            'HumusUser\Authentication\Adapter\Db' => array(
-                'parameters' => array(
-                    'mapper' => 'humususer_user_mapper',
-                ),
-            ),
-            'humususer_auth_service' => array(
-                'parameters' => array(
-                    'storage' => 'HumusUser\Authentication\Storage\Db',
-                ),
-            ),
-            'HumusUser\Authentication\Storage\Db' => array(
-                'parameters' => array(
-                    'mapper' => 'humususer_user_mapper',
-                ),
-            ),
-            'HumusUser\Service\User' => array(
-                'parameters' => array(
-                    'authService'    => 'humususer_auth_service',
-                    'userMapper'     => 'humususer_user_mapper',
-                ),
-            ),
-            'HumusUser\Form\Register' => array(
-                'parameters' => array(
-                    'emailValidator'    => 'humususer_uemail_validator',
-                    'usernameValidator' => 'humususer_uusername_validator',
-                    'captcha_element'   => 'humususer_captcha_element'
-                ),
-            ),
-            'humususer_uemail_validator' => array(
-                'parameters' => array(
-                    'mapper'  => 'humususer_user_mapper',
-                    'options' => array(
-                        'key' => 'email',
-                    ),
-                ),
-            ),
-            'humususer_uusername_validator' => array(
-                'parameters' => array(
-                    'mapper'  => 'humususer_user_mapper',
-                    'options' => array(
-                        'key' => 'username',
-                    ),
-                ),
-            ),
-
-            /**
-             * Mapper / DB
-             */
-            'HumusUser\Model\UserMapper' => array(
-                'parameters' => array(
-                    'tableGateway'  => 'humususer_user_tg',
-                ),
-            ),
-            'humususer_user_tg' => array(
-                'parameters' => array(
-                    'tableName' => 'user',
-                    'adapter'   => 'humususer_zend_db_adapter',
-                ),
-            ),
-
-            /**
-             * View helper(s)
-             */
-            'Zend\View\HelperLoader' => array(
-                'parameters' => array(
-                    'map' => array(
-                        'humusUserIdentity' => 'HumusUser\View\Helper\HumusUserIdentity',
-                        'humusUserLoginWidget' => 'HumusUser\View\Helper\HumusUserLoginWidget',
-                    ),
-                ),
-            ),
-            'HumusUser\View\Helper\HumusUserIdentity' => array(
-                'parameters' => array(
-                    'authService' => 'humususer_auth_service',
-                ),
-            ),
-            'HumusUser\View\Helper\HumusUserLoginWidget' => array(
-                'parameters' => array(
-                    'loginForm'      => 'HumusUser\Form\Login',
+                    //'emailValidator'    => 'humususer_uemail_validator',
+                    //'usernameValidator' => 'humususer_uusername_validator',
+                    'captchaElement'   => 'humususer_captcha_element'
                 ),
             ),
 
@@ -176,36 +80,6 @@ return array(
                             ),
                             'may_terminate' => true,
                             'child_routes' => array(
-                                'login' => array(
-                                    'type' => 'Literal',
-                                    'options' => array(
-                                        'route' => '/login',
-                                        'defaults' => array(
-                                            'controller' => 'humususer',
-                                            'action'     => 'login',
-                                        ),
-                                    ),
-                                ),
-                                'authenticate' => array(
-                                    'type' => 'Literal',
-                                    'options' => array(
-                                        'route' => '/authenticate',
-                                        'defaults' => array(
-                                            'controller' => 'humususer',
-                                            'action'     => 'authenticate',
-                                        ),
-                                    ),
-                                ),
-                                'logout' => array(
-                                    'type' => 'Literal',
-                                    'options' => array(
-                                        'route' => '/logout',
-                                        'defaults' => array(
-                                            'controller' => 'humususer',
-                                            'action'     => 'logout',
-                                        ),
-                                    ),
-                                ),
                                 'register' => array(
                                     'type' => 'Literal',
                                     'options' => array(
