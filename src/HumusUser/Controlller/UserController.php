@@ -28,16 +28,11 @@ class UserController extends ActionController
         */
 
         $request = $this->getRequest();
+        $userService = $this->getUserService();
         $form = $this->getUserService()->getRegistrationForm();
 
-        $fm = $this->flashMessenger()->setNamespace(__METHOD__)->getMessages();
-        if (isset($fm[0])) {
-            $this->registerForm->isValid($fm[0]);
-        }
-
         if ($request->isPost() && Module::getOptions()->getEnableRegistration()) {
-            try {
-                $this->getUserService()->register($request->post()->toArray());
+            if ($userService->register($request->post()->toArray())) {
                 if (Module::getOptions()->getLoginAfterRegistration()) {
                     $post = $request->post();
                     $post['identity'] = $post['email'];
@@ -45,15 +40,10 @@ class UserController extends ActionController
                     return $this->forward()->dispatch('humususer', array('action' => 'authenticate'));
                 }
                 return $this->redirect()->toRoute('humususer/login');
-            } catch (InvalidArgumentException $e) {
-                foreach ($form->getMessages() as $message) {
-                    $this->flashMessenger()->setNamespace(__METHOD__)->addMessage($message);
-                }
-                return $this->redirect()->toRoute('humususer/register');
             }
         }
         return array(
-            'registerForm' => $form,
+            'registerForm' => $form
         );
     }
 

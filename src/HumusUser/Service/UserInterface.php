@@ -10,7 +10,22 @@ interface UserInterface
     /**
      * Get registration form
      *
-     * @return \Zend\Form\Form
+     * @return Form
      */
     public function getRegistrationForm();
+
+    /**
+     * Set registration form
+     *
+     * @param Form $registrationForm
+     */
+    public function setRegistrationForm(Form $registrationForm);
+
+    /**
+     * Registers a new user
+     *
+     * @param array $data
+     * @return bool
+     */
+    public function register(array $data);
 }

@@ -34,4 +34,19 @@ class User implements UserInterface
         $this->registrationForm = $registrationForm;
         return $this;
     }
+
+    /**
+     * Registers a new user
+     *
+     * @param array $data
+     * @return bool
+     */
+    public function register(array $data)
+    {
+        $form = $this->getRegistrationForm();
+        if (!$form->isValid($data)) {
+            return false;
+        }
+        return true;
+    }
 }
