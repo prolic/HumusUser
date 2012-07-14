@@ -1,4 +1,7 @@
 # HumusUser Module for Zend Framework 2
+
+This module is deprecated in favour of ZfcUser. Most differences are reintegrated in ZfcUser.
+
 The HumusUser module is a user registration and authentication module for Zend Framework 2.
 Out of the box it uses NO storage adapter at all.
 
